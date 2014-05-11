@@ -6,7 +6,7 @@ var express = require('express'),
 
 
 
-app.set('port', 3001);
+app.set('port', Number(process.env.PORT || 3001));
 
 app.get('/feed/:url', function(req, res){
   function callback (meta, articles) {
@@ -17,12 +17,9 @@ app.get('/feed/:url', function(req, res){
   console.log('Getting ' + req.params.url);
   feedparser.parseUrl(req.params.url)
     .on('complete', callback);
-  //res.send(req.params[0]);
 });
 
 app.get('/feeds', function(req, res){
-  console.log('In the feeds ');
-  console.log(req.query.urls);
   var urls = req.query.urls || [],
     results = [],
     i = 0,
